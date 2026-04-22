@@ -62,10 +62,10 @@ export class PubgModule {
       imports: [ConfigModule],
       useFactory: (config: ConfigService) => ({
         apiKey: config.getOrThrow<string>('PUBG_API_KEY'),
-        rateLimit: config.get<boolean>('PUBG_RATE_LIMIT', true),
-        cache: config.get<boolean>('PUBG_CACHE', true),
-        cacheTtl: config.get<number>('PUBG_CACHE_TTL', 60_000),
-        timeout: config.get<number>('PUBG_TIMEOUT', 10_000),
+        rateLimit: config.get('PUBG_RATE_LIMIT', 'true') !== 'false',
+        cache: config.get('PUBG_CACHE', 'true') !== 'false',
+        cacheTtl: Number(config.get('PUBG_CACHE_TTL', '60000')),
+        timeout: Number(config.get('PUBG_TIMEOUT', '10000')),
       }),
       inject: [ConfigService],
     });
