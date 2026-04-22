@@ -13,4 +13,7 @@ export default defineConfig({
   splitting: false,
   treeshake: true,
   external: ['@nestjs/common', '@nestjs/core'],
+  outExtension({ format }) {
+    return { js: format === 'cjs' ? '.cjs' : '.js' };
+  },
 });
