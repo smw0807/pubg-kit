@@ -32,9 +32,9 @@ npm install @nestjs/common @nestjs/core
 ## 빠른 시작
 
 ```ts
-import { PubgClient } from 'pubg-kit';
+import {PubgClient} from 'pubg-kit';
 
-const client = new PubgClient({ apiKey: 'YOUR_API_KEY' });
+const client = new PubgClient({apiKey: 'YOUR_API_KEY'});
 
 // 플레이어 이름으로 조회
 const players = await client.shard('steam').players.getByNames(['shroud']);
@@ -49,24 +49,31 @@ console.log(match.data.attributes.gameMode);
 
 ```ts
 const client = new PubgClient({
-  apiKey: 'YOUR_API_KEY',  // 필수
-  rateLimit: true,          // Rate Limiter 활성화 (기본값: true)
-  cache: true,              // 응답 캐싱 활성화 (기본값: true)
-  cacheTtl: 60_000,         // 캐시 TTL ms (기본값: 60000)
-  timeout: 10_000,          // HTTP 타임아웃 ms (기본값: 10000)
+  apiKey: 'YOUR_API_KEY', // 필수
+  rateLimit: true, // Rate Limiter 활성화 (기본값: true)
+  cache: true, // 응답 캐싱 활성화 (기본값: true)
+  cacheTtl: 60_000, // 캐시 TTL ms (기본값: 60000)
+  timeout: 10_000, // HTTP 타임아웃 ms (기본값: 10000)
 });
 ```
 
 ## 플랫폼 샤드
 
 ```ts
-type PlatformShard = 'kakao' | 'stadia' | 'steam' | 'tournament' | 'psn' | 'xbox' | 'console';
+type PlatformShard =
+  | 'kakao'
+  | 'stadia'
+  | 'steam'
+  | 'tournament'
+  | 'psn'
+  | 'xbox'
+  | 'console';
 
-client.shard('steam')    // Steam PC
-client.shard('kakao')    // 카카오 (한국)
-client.shard('psn')      // PlayStation
-client.shard('xbox')     // Xbox
-client.shard('console')  // 콘솔 (크로스 플랫폼)
+client.shard('steam'); // Steam PC
+client.shard('kakao'); // 카카오 (한국)
+client.shard('psn'); // PlayStation
+client.shard('xbox'); // Xbox
+client.shard('console'); // 콘솔 (크로스 플랫폼)
 ```
 
 ## API 레퍼런스
@@ -104,16 +111,25 @@ const seasons = await shard.seasons.getAll();
 const stats = await shard.seasons.getPlayerStats('account.xxx', 'season-id');
 
 // 플레이어 랭크 시즌 통계 (Season 7 이후)
-const ranked = await shard.seasons.getPlayerRankedStats('account.xxx', 'season-id');
+const ranked = await shard.seasons.getPlayerRankedStats(
+  'account.xxx',
+  'season-id',
+);
 
 // 라이프타임(누적) 통계
 const lifetime = await shard.seasons.getLifetimeStats('account.xxx');
 
 // 배치 일반 시즌 통계 — 최대 10명, 게임 모드 단위
-const batch = await shard.seasons.getBatchPlayerStats('season-id', 'squad', ['account.xxx', 'account.yyy']);
+const batch = await shard.seasons.getBatchPlayerStats('season-id', 'squad', [
+  'account.xxx',
+  'account.yyy',
+]);
 
 // 배치 라이프타임 통계 — 최대 10명, 게임 모드 단위
-const batchLifetime = await shard.seasons.getBatchLifetimeStats('squad', ['account.xxx', 'account.yyy']);
+const batchLifetime = await shard.seasons.getBatchLifetimeStats('squad', [
+  'account.xxx',
+  'account.yyy',
+]);
 ```
 
 ### Leaderboards
@@ -169,14 +185,16 @@ const clan = await shard.clans.get('clan-id');
 
 ```ts
 import {
-  PubgUnauthorizedError,  // 401 — API 키 오류
-  PubgNotFoundError,      // 404 — 리소스 없음
-  PubgRateLimitError,     // 429 — Rate Limit 초과
-  PubgApiError,           // 그 외 API 오류
+  PubgUnauthorizedError, // 401 — API 키 오류
+  PubgNotFoundError, // 404 — 리소스 없음
+  PubgRateLimitError, // 429 — Rate Limit 초과
+  PubgApiError, // 그 외 API 오류
 } from 'pubg-kit';
 
 try {
-  const players = await client.shard('steam').players.getByNames(['존재하지않는플레이어']);
+  const players = await client
+    .shard('steam')
+    .players.getByNames(['존재하지않는플레이어']);
 } catch (error) {
   if (error instanceof PubgNotFoundError) {
     console.error('플레이어를 찾을 수 없습니다.');
@@ -193,7 +211,7 @@ try {
 ### A. forRoot — 직접 값 주입
 
 ```ts
-import { PubgModule } from 'pubg-kit/nestjs';
+import {PubgModule} from 'pubg-kit/dist/nestjs';
 
 @Module({
   imports: [
@@ -208,8 +226,8 @@ export class AppModule {}
 ### B. forRootAsync — ConfigService 등 DI 사용
 
 ```ts
-import { PubgModule } from 'pubg-kit/nestjs';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import {PubgModule} from 'pubg-kit/dist/nestjs';
+import {ConfigModule, ConfigService} from '@nestjs/config';
 
 @Module({
   imports: [
@@ -238,7 +256,7 @@ PUBG_TIMEOUT=10000
 ```
 
 ```ts
-import { PubgModule } from 'pubg-kit/nestjs';
+import {PubgModule} from 'pubg-kit/dist/nestjs';
 
 @Module({
   imports: [PubgModule.withConfig()],
@@ -249,8 +267,8 @@ export class AppModule {}
 ### PubgService 사용
 
 ```ts
-import { Injectable } from '@nestjs/common';
-import { PubgService } from 'pubg-kit/nestjs';
+import {Injectable} from '@nestjs/common';
+import {PubgService} from 'pubg-kit/nestjs';
 
 @Injectable()
 export class PlayerService {
@@ -266,37 +284,35 @@ export class PlayerService {
 ### @InjectPubgClient() 데코레이터
 
 ```ts
-import { Injectable } from '@nestjs/common';
-import { InjectPubgClient } from 'pubg-kit/nestjs';
-import { PubgClient } from 'pubg-kit';
+import {Injectable} from '@nestjs/common';
+import {InjectPubgClient} from 'pubg-kit/nestjs';
+import {PubgClient} from 'pubg-kit';
 
 @Injectable()
 export class PlayerService {
-  constructor(
-    @InjectPubgClient() private readonly client: PubgClient,
-  ) {}
+  constructor(@InjectPubgClient() private readonly client: PubgClient) {}
 }
 ```
 
 ## 환경 변수 (withConfig)
 
-| 변수명 | 설명 | 기본값 |
-|---|---|---|
-| `PUBG_API_KEY` | PUBG API 키 (**필수**) | — |
-| `PUBG_RATE_LIMIT` | Rate Limiter 활성화 | `true` |
-| `PUBG_CACHE` | 응답 캐싱 활성화 | `true` |
-| `PUBG_CACHE_TTL` | 캐시 TTL (ms) | `60000` |
-| `PUBG_TIMEOUT` | HTTP 타임아웃 (ms) | `10000` |
+| 변수명            | 설명                   | 기본값  |
+| ----------------- | ---------------------- | ------- |
+| `PUBG_API_KEY`    | PUBG API 키 (**필수**) | —       |
+| `PUBG_RATE_LIMIT` | Rate Limiter 활성화    | `true`  |
+| `PUBG_CACHE`      | 응답 캐싱 활성화       | `true`  |
+| `PUBG_CACHE_TTL`  | 캐시 TTL (ms)          | `60000` |
+| `PUBG_TIMEOUT`    | HTTP 타임아웃 (ms)     | `10000` |
 
 ## 캐시 TTL 전략
 
-| 엔드포인트 | TTL |
-|---|---|
-| `matches.get()` | 영구 (매치 데이터는 불변) |
-| `seasons.getAll()` | 1시간 |
-| `leaderboards.get()` | 10분 |
-| `players.getById()` | 5분 |
-| `status.get()` | 30초 |
+| 엔드포인트           | TTL                       |
+| -------------------- | ------------------------- |
+| `matches.get()`      | 영구 (매치 데이터는 불변) |
+| `seasons.getAll()`   | 1시간                     |
+| `leaderboards.get()` | 10분                      |
+| `players.getById()`  | 5분                       |
+| `status.get()`       | 30초                      |
 
 ## 개발
 

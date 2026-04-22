@@ -209,7 +209,7 @@ try {
 ### A. forRoot — static options
 
 ```ts
-import {PubgModule} from 'pubg-kit/nestjs';
+import {PubgModule} from 'pubg-kit/dist/nestjs';
 
 @Module({
   imports: [
@@ -224,7 +224,7 @@ export class AppModule {}
 ### B. forRootAsync — async factory (e.g. ConfigService)
 
 ```ts
-import {PubgModule} from 'pubg-kit/nestjs';
+import {PubgModule} from 'pubg-kit/dist/nestjs';
 import {ConfigModule, ConfigService} from '@nestjs/config';
 
 @Module({
@@ -254,7 +254,7 @@ PUBG_TIMEOUT=10000
 ```
 
 ```ts
-import {PubgModule} from 'pubg-kit/nestjs';
+import {PubgModule} from 'pubg-kit/dist/nestjs';
 
 @Module({
   imports: [PubgModule.withConfig()],
@@ -266,7 +266,7 @@ export class AppModule {}
 
 ```ts
 import {Injectable} from '@nestjs/common';
-import {PubgService} from 'pubg-kit/nestjs';
+import {PubgService} from 'pubg-kit/dist/nestjs';
 
 @Injectable()
 export class PlayerService {
