@@ -113,6 +113,47 @@ export const handlers = [
     });
   }),
 
+  http.get(`${BASE_URL}/shards/:shard/players/:playerId/seasons/lifetime`, ({ params }) => {
+    return HttpResponse.json({
+      data: {
+        type: 'playerSeason',
+        id: `${params.playerId}-lifetime`,
+        attributes: {
+          gameModeStats: {
+            squad: {
+              assists: 100,
+              kills: 500,
+              wins: 50,
+              roundsPlayed: 1000,
+            },
+          },
+        },
+      },
+    });
+  }),
+
+  http.get(`${BASE_URL}/shards/:shard/players/:playerId/seasons/:seasonId/ranked`, ({ params }) => {
+    return HttpResponse.json({
+      data: {
+        type: 'playerRankedSeason',
+        id: `${params.playerId}-${params.seasonId}-ranked`,
+        attributes: {
+          rankedGameModeStats: {
+            squad: {
+              currentRankPoint: 3000,
+              bestRankPoint: 3500,
+              currentTier: { tier: 'Gold', subTier: '1' },
+              bestTier: { tier: 'Platinum', subTier: '2' },
+              roundsPlayed: 50,
+              wins: 8,
+              kills: 120,
+            },
+          },
+        },
+      },
+    });
+  }),
+
   http.get(`${BASE_URL}/shards/:shard/players/:playerId/seasons/:seasonId`, ({ params }) => {
     return HttpResponse.json({
       data: {
@@ -132,22 +173,37 @@ export const handlers = [
     });
   }),
 
-  http.get(`${BASE_URL}/shards/:shard/players/:playerId/seasons/lifetime`, ({ params }) => {
+  // Batch season stats
+  http.get(`${BASE_URL}/shards/:shard/seasons/:seasonId/gameMode/:gameMode/players`, () => {
     return HttpResponse.json({
-      data: {
-        type: 'playerSeason',
-        id: `${params.playerId}-lifetime`,
-        attributes: {
-          gameModeStats: {
-            squad: {
-              assists: 100,
-              kills: 500,
-              wins: 50,
-              roundsPlayed: 1000,
+      data: [
+        {
+          type: 'playerSeason',
+          id: 'account.test123-season',
+          attributes: {
+            gameModeStats: {
+              squad: { kills: 50, wins: 5, roundsPlayed: 100 },
             },
           },
         },
-      },
+      ],
+    });
+  }),
+
+  // Batch lifetime stats
+  http.get(`${BASE_URL}/shards/:shard/seasons/lifetime/gameMode/:gameMode/players`, () => {
+    return HttpResponse.json({
+      data: [
+        {
+          type: 'playerSeason',
+          id: 'account.test123-lifetime',
+          attributes: {
+            gameModeStats: {
+              squad: { kills: 500, wins: 50, roundsPlayed: 1000 },
+            },
+          },
+        },
+      ],
     });
   }),
 

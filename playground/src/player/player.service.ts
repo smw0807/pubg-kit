@@ -22,6 +22,10 @@ export class PlayerService {
     return this.pubg.shard(platform).seasons.getPlayerStats(playerId, seasonId);
   }
 
+  getPlayerRankedStats(playerId: string, seasonId: string, platform: PlatformShard) {
+    return this.pubg.shard(platform).seasons.getPlayerRankedStats(playerId, seasonId);
+  }
+
   getLifetimeStats(playerId: string, platform: PlatformShard) {
     return this.pubg.shard(platform).seasons.getLifetimeStats(playerId);
   }

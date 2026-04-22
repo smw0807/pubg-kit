@@ -18,15 +18,29 @@ export class SeasonsResource extends BaseResource {
     return this.request(url, cacheKey, TTL_5MIN);
   }
 
+  async getPlayerRankedStats(playerId: string, seasonId: string): Promise<unknown> {
+    const url = `${this.shardPath}/players/${playerId}/seasons/${seasonId}/ranked`;
+    const cacheKey = `seasons:ranked-player:${this.shard}:${playerId}:${seasonId}`;
+    return this.request(url, cacheKey, TTL_5MIN);
+  }
+
   async getLifetimeStats(playerId: string): Promise<unknown> {
     const url = `${this.shardPath}/players/${playerId}/seasons/lifetime`;
     const cacheKey = `seasons:lifetime:${this.shard}:${playerId}`;
     return this.request(url, cacheKey, TTL_5MIN);
   }
 
-  async getRankedStats(seasonId: string, gameMode: string): Promise<unknown> {
-    const url = `${this.shardPath}/seasons/${seasonId}/gameMode/${gameMode}/players`;
-    const cacheKey = `seasons:ranked:${this.shard}:${seasonId}:${gameMode}`;
+  async getBatchPlayerStats(seasonId: string, gameMode: string, playerIds: string[]): Promise<unknown> {
+    const ids = playerIds.join(',');
+    const url = `${this.shardPath}/seasons/${seasonId}/gameMode/${gameMode}/players?filter[playerIds]=${ids}`;
+    const cacheKey = `seasons:batch:${this.shard}:${seasonId}:${gameMode}:${playerIds.sort().join(',')}`;
+    return this.request(url, cacheKey, TTL_5MIN);
+  }
+
+  async getBatchLifetimeStats(gameMode: string, playerIds: string[]): Promise<unknown> {
+    const ids = playerIds.join(',');
+    const url = `${this.shardPath}/seasons/lifetime/gameMode/${gameMode}/players?filter[playerIds]=${ids}`;
+    const cacheKey = `seasons:batch-lifetime:${this.shard}:${gameMode}:${playerIds.sort().join(',')}`;
     return this.request(url, cacheKey, TTL_5MIN);
   }
 }

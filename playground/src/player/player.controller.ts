@@ -78,7 +78,7 @@ export class PlayerController {
   @Get(':id/seasons/:seasonId')
   @ApiOperation({
     summary: '특정 시즌 스탯 조회',
-    description: '플레이어의 특정 시즌 통계를 반환',
+    description: '플레이어의 특정 시즌 일반 통계를 반환',
   })
   @ApiParam({ name: 'id', description: '플레이어 Account ID' })
   @ApiParam({ name: 'seasonId', description: '시즌 ID', example: 'division.bro.official.pc-2018-01' })
@@ -94,6 +94,27 @@ export class PlayerController {
     @Query('platform') platform: PlatformShard = 'steam',
   ) {
     return this.playerService.getSeasonStats(id, seasonId, platform);
+  }
+
+  @Get(':id/seasons/:seasonId/ranked')
+  @ApiOperation({
+    summary: '특정 시즌 랭크 스탯 조회',
+    description: '플레이어의 특정 시즌 랭크 통계를 반환 (Season 7 이후)',
+  })
+  @ApiParam({ name: 'id', description: '플레이어 Account ID' })
+  @ApiParam({ name: 'seasonId', description: '시즌 ID', example: 'division.bro.official.pc-2018-01' })
+  @ApiQuery({
+    name: 'platform',
+    enum: ['steam', 'kakao', 'xbox', 'psn', 'console', 'tournament', 'stadia'],
+    example: 'steam',
+  })
+  @ApiResponse({ status: 200, description: '랭크 시즌 스탯 반환' })
+  getPlayerRankedStats(
+    @Param('id') id: string,
+    @Param('seasonId') seasonId: string,
+    @Query('platform') platform: PlatformShard = 'steam',
+  ) {
+    return this.playerService.getPlayerRankedStats(id, seasonId, platform);
   }
 }
 
