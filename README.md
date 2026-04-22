@@ -10,6 +10,13 @@ TypeScript SDK + NestJS Module for the official PUBG REST API.
 
 [한국어 문서](https://github.com/smw0807/pubg-kit/blob/main/README.ko.md)
 
+## ⚠️ API Key & Rate Limit
+
+> **New API keys are limited to 10 requests per minute by default.**
+> If you need a higher rate limit, visit [https://developer.pubg.com](https://developer.pubg.com/?locale=en) and submit a rate limit increase request.
+
+This SDK's built-in rate limiter automatically respects the 10 req/60s constraint, but if your application requires higher throughput you must request an elevated limit from PUBG first.
+
 ## Installation
 
 ```bash

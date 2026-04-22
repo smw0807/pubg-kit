@@ -10,6 +10,13 @@ PUBG 공식 REST API를 위한 TypeScript SDK + NestJS Module 패키지입니다
 
 [English Documentation](./README.md)
 
+## ⚠️ API 키 및 요청 수 제한
+
+> **신규 발급 API 키는 기본적으로 분당 10회 요청으로 제한됩니다.**
+> 제한 해제가 필요한 경우 [https://developer.pubg.com](https://developer.pubg.com/?locale=en) 에 접속하여 Rate Limit 상향 요청을 별도로 제출해야 합니다.
+
+이 SDK의 내장 Rate Limiter는 10 req/60s 제약을 자동으로 준수하도록 동작하지만, 더 높은 처리량이 필요하다면 반드시 PUBG 측에 먼저 요청 수 상향을 신청하세요.
+
 ## 설치
 
 ```bash
