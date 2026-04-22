@@ -16,7 +16,9 @@ export type MapName =
   | 'Summerland_Main' // Karakin
   | 'Tiger_Main'      // Taego
   | 'Kiki_Main'       // Deston
-  | 'Neon_Main'       // Rondo
+  | 'Neon_Main'       // Neo Bangkok
+  | 'Paradise_Main'   // Paradise
+  | 'Rondo_Main'      // Rondo
   | (string & {});    // future maps
 
 export type MatchType = 'official' | 'custom' | 'training';
