@@ -22,7 +22,25 @@ export type {
   JsonApiResource,
 } from './types/common.types';
 export type { Player, PlayersResponse } from './types/player.types';
-export type { MatchAttributes, Match, MatchResponse } from './types/match.types';
+export type {
+  SeasonState,
+  ShardId,
+  MapName,
+  MatchType,
+  DeathType,
+  MatchAttributes,
+  Match,
+  MatchResponse,
+  Participant,
+  ParticipantStats,
+  Roster,
+  RosterStats,
+  Asset,
+  IncludedItem,
+  RosterReference,
+  AssetReference,
+  ParticipantReference,
+} from './types/match.types';
 export type {
   Season,
   SeasonsResponse,
