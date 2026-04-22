@@ -8,7 +8,7 @@ TypeScript SDK + NestJS Module for the official PUBG REST API.
 - **NestJS integration** — `forRoot` / `forRootAsync` / `withConfig`
 - **ESM + CJS** — dual-format output
 
-[한국어 문서](./README.ko.md)
+[한국어 문서](https://github.com/smw0807/pubg-kit/blob/main/README.ko.md)
 
 ## Installation
 
@@ -25,9 +25,9 @@ npm install @nestjs/common @nestjs/core
 ## Quick Start
 
 ```ts
-import { PubgClient } from 'pubg-kit';
+import {PubgClient} from 'pubg-kit';
 
-const client = new PubgClient({ apiKey: 'YOUR_API_KEY' });
+const client = new PubgClient({apiKey: 'YOUR_API_KEY'});
 
 // Look up players by name
 const players = await client.shard('steam').players.getByNames(['shroud']);
@@ -42,24 +42,31 @@ console.log(match.data.attributes.gameMode);
 
 ```ts
 const client = new PubgClient({
-  apiKey: 'YOUR_API_KEY',  // required
-  rateLimit: true,          // enable rate limiter (default: true)
-  cache: true,              // enable response cache (default: true)
-  cacheTtl: 60_000,         // cache TTL in ms (default: 60000)
-  timeout: 10_000,          // HTTP timeout in ms (default: 10000)
+  apiKey: 'YOUR_API_KEY', // required
+  rateLimit: true, // enable rate limiter (default: true)
+  cache: true, // enable response cache (default: true)
+  cacheTtl: 60_000, // cache TTL in ms (default: 60000)
+  timeout: 10_000, // HTTP timeout in ms (default: 10000)
 });
 ```
 
 ## Platform Shards
 
 ```ts
-type PlatformShard = 'kakao' | 'stadia' | 'steam' | 'tournament' | 'psn' | 'xbox' | 'console';
+type PlatformShard =
+  | 'kakao'
+  | 'stadia'
+  | 'steam'
+  | 'tournament'
+  | 'psn'
+  | 'xbox'
+  | 'console';
 
-client.shard('steam')    // Steam PC
-client.shard('kakao')    // Kakao (Korea)
-client.shard('psn')      // PlayStation
-client.shard('xbox')     // Xbox
-client.shard('console')  // Console (cross-platform)
+client.shard('steam'); // Steam PC
+client.shard('kakao'); // Kakao (Korea)
+client.shard('psn'); // PlayStation
+client.shard('xbox'); // Xbox
+client.shard('console'); // Console (cross-platform)
 ```
 
 ## API Reference
@@ -97,16 +104,25 @@ const seasons = await shard.seasons.getAll();
 const stats = await shard.seasons.getPlayerStats('account.xxx', 'season-id');
 
 // Ranked season stats for a single player (Season 7+)
-const ranked = await shard.seasons.getPlayerRankedStats('account.xxx', 'season-id');
+const ranked = await shard.seasons.getPlayerRankedStats(
+  'account.xxx',
+  'season-id',
+);
 
 // Lifetime (career) stats for a single player
 const lifetime = await shard.seasons.getLifetimeStats('account.xxx');
 
 // Batch normal season stats — up to 10 players, single game mode
-const batch = await shard.seasons.getBatchPlayerStats('season-id', 'squad', ['account.xxx', 'account.yyy']);
+const batch = await shard.seasons.getBatchPlayerStats('season-id', 'squad', [
+  'account.xxx',
+  'account.yyy',
+]);
 
 // Batch lifetime stats — up to 10 players, single game mode
-const batchLifetime = await shard.seasons.getBatchLifetimeStats('squad', ['account.xxx', 'account.yyy']);
+const batchLifetime = await shard.seasons.getBatchLifetimeStats('squad', [
+  'account.xxx',
+  'account.yyy',
+]);
 ```
 
 ### Leaderboards
@@ -162,10 +178,10 @@ const clan = await shard.clans.get('clan-id');
 
 ```ts
 import {
-  PubgUnauthorizedError,  // 401 — invalid API key
-  PubgNotFoundError,      // 404 — resource not found
-  PubgRateLimitError,     // 429 — rate limit exceeded
-  PubgApiError,           // any other API error
+  PubgUnauthorizedError, // 401 — invalid API key
+  PubgNotFoundError, // 404 — resource not found
+  PubgRateLimitError, // 429 — rate limit exceeded
+  PubgApiError, // any other API error
 } from 'pubg-kit';
 
 try {
@@ -186,7 +202,7 @@ try {
 ### A. forRoot — static options
 
 ```ts
-import { PubgModule } from 'pubg-kit/nestjs';
+import {PubgModule} from 'pubg-kit/nestjs';
 
 @Module({
   imports: [
@@ -201,8 +217,8 @@ export class AppModule {}
 ### B. forRootAsync — async factory (e.g. ConfigService)
 
 ```ts
-import { PubgModule } from 'pubg-kit/nestjs';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import {PubgModule} from 'pubg-kit/nestjs';
+import {ConfigModule, ConfigService} from '@nestjs/config';
 
 @Module({
   imports: [
@@ -231,7 +247,7 @@ PUBG_TIMEOUT=10000
 ```
 
 ```ts
-import { PubgModule } from 'pubg-kit/nestjs';
+import {PubgModule} from 'pubg-kit/nestjs';
 
 @Module({
   imports: [PubgModule.withConfig()],
@@ -242,8 +258,8 @@ export class AppModule {}
 ### Using PubgService
 
 ```ts
-import { Injectable } from '@nestjs/common';
-import { PubgService } from 'pubg-kit/nestjs';
+import {Injectable} from '@nestjs/common';
+import {PubgService} from 'pubg-kit/nestjs';
 
 @Injectable()
 export class PlayerService {
@@ -259,37 +275,35 @@ export class PlayerService {
 ### @InjectPubgClient() decorator
 
 ```ts
-import { Injectable } from '@nestjs/common';
-import { InjectPubgClient } from 'pubg-kit/nestjs';
-import { PubgClient } from 'pubg-kit';
+import {Injectable} from '@nestjs/common';
+import {InjectPubgClient} from 'pubg-kit/nestjs';
+import {PubgClient} from 'pubg-kit';
 
 @Injectable()
 export class PlayerService {
-  constructor(
-    @InjectPubgClient() private readonly client: PubgClient,
-  ) {}
+  constructor(@InjectPubgClient() private readonly client: PubgClient) {}
 }
 ```
 
 ## Environment Variables (`withConfig`)
 
-| Variable | Description | Default |
-|---|---|---|
-| `PUBG_API_KEY` | PUBG API key (**required**) | — |
-| `PUBG_RATE_LIMIT` | Enable rate limiter | `true` |
-| `PUBG_CACHE` | Enable response cache | `true` |
-| `PUBG_CACHE_TTL` | Cache TTL in ms | `60000` |
-| `PUBG_TIMEOUT` | HTTP timeout in ms | `10000` |
+| Variable          | Description                 | Default |
+| ----------------- | --------------------------- | ------- |
+| `PUBG_API_KEY`    | PUBG API key (**required**) | —       |
+| `PUBG_RATE_LIMIT` | Enable rate limiter         | `true`  |
+| `PUBG_CACHE`      | Enable response cache       | `true`  |
+| `PUBG_CACHE_TTL`  | Cache TTL in ms             | `60000` |
+| `PUBG_TIMEOUT`    | HTTP timeout in ms          | `10000` |
 
 ## Cache TTL Strategy
 
-| Endpoint | TTL |
-|---|---|
-| `matches.get()` | Permanent (match data is immutable) |
-| `seasons.getAll()` | 1 hour |
-| `leaderboards.get()` | 10 minutes |
-| `players.getById()` | 5 minutes |
-| `status.get()` | 30 seconds |
+| Endpoint             | TTL                                 |
+| -------------------- | ----------------------------------- |
+| `matches.get()`      | Permanent (match data is immutable) |
+| `seasons.getAll()`   | 1 hour                              |
+| `leaderboards.get()` | 10 minutes                          |
+| `players.getById()`  | 5 minutes                           |
+| `status.get()`       | 30 seconds                          |
 
 ## Development
 
