@@ -1,81 +1,81 @@
 # pubg-kit
 
-TypeScript SDK + NestJS Module for the official PUBG REST API.
+PUBG 공식 REST API를 위한 TypeScript SDK + NestJS Module 패키지입니다.
 
-- **Full TypeScript support** — runtime validation powered by Zod
-- **Built-in rate limiter** — automatic 10 req/60s throttling
-- **LRU response cache** — per-endpoint TTL strategy
-- **NestJS integration** — `forRoot` / `forRootAsync` / `withConfig`
-- **ESM + CJS** — dual-format output
+- **완전한 TypeScript 타입 지원** — Zod 기반 런타임 검증
+- **Rate Limiter 내장** — 10 req/60s 자동 제어
+- **LRU 응답 캐싱** — 엔드포인트별 최적 TTL 전략
+- **NestJS 통합** — `forRoot` / `forRootAsync` / `withConfig` 3가지 등록 방식
+- **ESM + CJS** — 동시 출력
 
-[한국어 문서](./README.ko.md)
+[English Documentation](./README.md)
 
-## Installation
+## 설치
 
 ```bash
 npm install pubg-kit
 ```
 
-If you are using NestJS, install the peer dependencies first:
+NestJS에서 사용하는 경우 peerDependency를 먼저 설치하세요:
 
 ```bash
 npm install @nestjs/common @nestjs/core
 ```
 
-## Quick Start
+## 빠른 시작
 
 ```ts
 import { PubgClient } from 'pubg-kit';
 
 const client = new PubgClient({ apiKey: 'YOUR_API_KEY' });
 
-// Look up players by name
+// 플레이어 이름으로 조회
 const players = await client.shard('steam').players.getByNames(['shroud']);
 console.log(players[0].attributes.name);
 
-// Fetch a match
+// 매치 조회
 const match = await client.shard('steam').matches.get('match-id');
 console.log(match.data.attributes.gameMode);
 ```
 
-## Client Options
+## PubgClient 옵션
 
 ```ts
 const client = new PubgClient({
-  apiKey: 'YOUR_API_KEY',  // required
-  rateLimit: true,          // enable rate limiter (default: true)
-  cache: true,              // enable response cache (default: true)
-  cacheTtl: 60_000,         // cache TTL in ms (default: 60000)
-  timeout: 10_000,          // HTTP timeout in ms (default: 10000)
+  apiKey: 'YOUR_API_KEY',  // 필수
+  rateLimit: true,          // Rate Limiter 활성화 (기본값: true)
+  cache: true,              // 응답 캐싱 활성화 (기본값: true)
+  cacheTtl: 60_000,         // 캐시 TTL ms (기본값: 60000)
+  timeout: 10_000,          // HTTP 타임아웃 ms (기본값: 10000)
 });
 ```
 
-## Platform Shards
+## 플랫폼 샤드
 
 ```ts
 type PlatformShard = 'kakao' | 'stadia' | 'steam' | 'tournament' | 'psn' | 'xbox' | 'console';
 
 client.shard('steam')    // Steam PC
-client.shard('kakao')    // Kakao (Korea)
+client.shard('kakao')    // 카카오 (한국)
 client.shard('psn')      // PlayStation
 client.shard('xbox')     // Xbox
-client.shard('console')  // Console (cross-platform)
+client.shard('console')  // 콘솔 (크로스 플랫폼)
 ```
 
-## API Reference
+## API 레퍼런스
 
 ### Players
 
 ```ts
 const shard = client.shard('steam');
 
-// Look up by player names (up to 10)
+// 이름으로 복수 조회 (최대 10명)
 const players = await shard.players.getByNames(['Player1', 'Player2']);
 
-// Look up by account IDs (up to 10)
+// Account ID로 복수 조회 (최대 10명)
 const players = await shard.players.getByIds(['account.xxx', 'account.yyy']);
 
-// Fetch a single player by account ID
+// Account ID로 단일 조회
 const player = await shard.players.getById('account.xxx');
 ```
 
@@ -83,29 +83,29 @@ const player = await shard.players.getById('account.xxx');
 
 ```ts
 const match = await shard.matches.get('match-id');
-// match.data      — core match attributes
-// match.included  — rosters, participants, and assets
+// match.data      — 매치 기본 정보
+// match.included  — 로스터, 참가자, 에셋 등 관련 데이터
 ```
 
 ### Seasons
 
 ```ts
-// All seasons for the platform
+// 전체 시즌 목록
 const seasons = await shard.seasons.getAll();
 
-// Normal season stats for a single player
+// 플레이어 일반 시즌 통계
 const stats = await shard.seasons.getPlayerStats('account.xxx', 'season-id');
 
-// Ranked season stats for a single player (Season 7+)
+// 플레이어 랭크 시즌 통계 (Season 7 이후)
 const ranked = await shard.seasons.getPlayerRankedStats('account.xxx', 'season-id');
 
-// Lifetime (career) stats for a single player
+// 라이프타임(누적) 통계
 const lifetime = await shard.seasons.getLifetimeStats('account.xxx');
 
-// Batch normal season stats — up to 10 players, single game mode
+// 배치 일반 시즌 통계 — 최대 10명, 게임 모드 단위
 const batch = await shard.seasons.getBatchPlayerStats('season-id', 'squad', ['account.xxx', 'account.yyy']);
 
-// Batch lifetime stats — up to 10 players, single game mode
+// 배치 라이프타임 통계 — 최대 10명, 게임 모드 단위
 const batchLifetime = await shard.seasons.getBatchLifetimeStats('squad', ['account.xxx', 'account.yyy']);
 ```
 
@@ -113,7 +113,7 @@ const batchLifetime = await shard.seasons.getBatchLifetimeStats('squad', ['accou
 
 ```ts
 const lb = await shard.leaderboards.get('season-id', 'squad');
-const lb = await shard.leaderboards.get('season-id', 'squad', 2); // paginated (500 players/page)
+const lb = await shard.leaderboards.get('season-id', 'squad', 2); // 페이지 지정 (500명/페이지)
 ```
 
 ### Status
@@ -125,30 +125,30 @@ const status = await shard.status.get();
 ### Samples
 
 ```ts
-// Random sample of match IDs (refreshed every 24h)
+// 무작위 매치 ID 목록 (24시간마다 갱신)
 const samples = await shard.samples.get();
 
-// Filter by creation time
+// 생성 시각 필터 적용
 const samples = await shard.samples.get('2024-01-01T00:00:00Z');
 ```
 
 ### Telemetry
 
 ```ts
-// Fetch all telemetry events from a match asset URL
+// 매치 에셋 URL로 텔레메트리 이벤트 전체 조회
 const events = await shard.telemetry.get('https://telemetry-cdn.pubg.com/...');
 
-// Filter by event type
+// 이벤트 타입으로 필터링
 const kills = await shard.telemetry.getEvents(telemetryUrl, 'LogPlayerKillV2');
 ```
 
 ### Mastery
 
 ```ts
-// Weapon mastery stats
+// 무기 숙련도
 const weapon = await shard.mastery.getWeapon('account.xxx');
 
-// Survival mastery stats
+// 생존 숙련도
 const survival = await shard.mastery.getSurvival('account.xxx');
 ```
 
@@ -158,32 +158,32 @@ const survival = await shard.mastery.getSurvival('account.xxx');
 const clan = await shard.clans.get('clan-id');
 ```
 
-## Error Handling
+## 에러 처리
 
 ```ts
 import {
-  PubgUnauthorizedError,  // 401 — invalid API key
-  PubgNotFoundError,      // 404 — resource not found
-  PubgRateLimitError,     // 429 — rate limit exceeded
-  PubgApiError,           // any other API error
+  PubgUnauthorizedError,  // 401 — API 키 오류
+  PubgNotFoundError,      // 404 — 리소스 없음
+  PubgRateLimitError,     // 429 — Rate Limit 초과
+  PubgApiError,           // 그 외 API 오류
 } from 'pubg-kit';
 
 try {
-  const players = await client.shard('steam').players.getByNames(['unknown']);
+  const players = await client.shard('steam').players.getByNames(['존재하지않는플레이어']);
 } catch (error) {
   if (error instanceof PubgNotFoundError) {
-    console.error('Player not found.');
+    console.error('플레이어를 찾을 수 없습니다.');
   } else if (error instanceof PubgRateLimitError) {
-    console.error('Rate limit exceeded. Please retry later.');
+    console.error('Rate Limit 초과. 잠시 후 다시 시도하세요.');
   } else if (error instanceof PubgUnauthorizedError) {
-    console.error('Invalid API key.');
+    console.error('API 키를 확인하세요.');
   }
 }
 ```
 
-## NestJS Integration
+## NestJS 통합
 
-### A. forRoot — static options
+### A. forRoot — 직접 값 주입
 
 ```ts
 import { PubgModule } from 'pubg-kit/nestjs';
@@ -198,7 +198,7 @@ import { PubgModule } from 'pubg-kit/nestjs';
 export class AppModule {}
 ```
 
-### B. forRootAsync — async factory (e.g. ConfigService)
+### B. forRootAsync — ConfigService 등 DI 사용
 
 ```ts
 import { PubgModule } from 'pubg-kit/nestjs';
@@ -218,9 +218,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 export class AppModule {}
 ```
 
-### C. withConfig — auto-wired from environment variables
+### C. withConfig — 환경 변수 자동 연결
 
-Set the environment variables and call `withConfig()` — no other configuration needed.
+`.env` 파일에 환경 변수만 설정하면 추가 설정 없이 동작합니다:
 
 ```env
 PUBG_API_KEY=your_api_key
@@ -239,7 +239,7 @@ import { PubgModule } from 'pubg-kit/nestjs';
 export class AppModule {}
 ```
 
-### Using PubgService
+### PubgService 사용
 
 ```ts
 import { Injectable } from '@nestjs/common';
@@ -256,7 +256,7 @@ export class PlayerService {
 }
 ```
 
-### @InjectPubgClient() decorator
+### @InjectPubgClient() 데코레이터
 
 ```ts
 import { Injectable } from '@nestjs/common';
@@ -271,37 +271,37 @@ export class PlayerService {
 }
 ```
 
-## Environment Variables (`withConfig`)
+## 환경 변수 (withConfig)
 
-| Variable | Description | Default |
+| 변수명 | 설명 | 기본값 |
 |---|---|---|
-| `PUBG_API_KEY` | PUBG API key (**required**) | — |
-| `PUBG_RATE_LIMIT` | Enable rate limiter | `true` |
-| `PUBG_CACHE` | Enable response cache | `true` |
-| `PUBG_CACHE_TTL` | Cache TTL in ms | `60000` |
-| `PUBG_TIMEOUT` | HTTP timeout in ms | `10000` |
+| `PUBG_API_KEY` | PUBG API 키 (**필수**) | — |
+| `PUBG_RATE_LIMIT` | Rate Limiter 활성화 | `true` |
+| `PUBG_CACHE` | 응답 캐싱 활성화 | `true` |
+| `PUBG_CACHE_TTL` | 캐시 TTL (ms) | `60000` |
+| `PUBG_TIMEOUT` | HTTP 타임아웃 (ms) | `10000` |
 
-## Cache TTL Strategy
+## 캐시 TTL 전략
 
-| Endpoint | TTL |
+| 엔드포인트 | TTL |
 |---|---|
-| `matches.get()` | Permanent (match data is immutable) |
-| `seasons.getAll()` | 1 hour |
-| `leaderboards.get()` | 10 minutes |
-| `players.getById()` | 5 minutes |
-| `status.get()` | 30 seconds |
+| `matches.get()` | 영구 (매치 데이터는 불변) |
+| `seasons.getAll()` | 1시간 |
+| `leaderboards.get()` | 10분 |
+| `players.getById()` | 5분 |
+| `status.get()` | 30초 |
 
-## Development
+## 개발
 
 ```bash
-npm install          # install dependencies
-npm run build        # tsup build (outputs to dist/)
-npm run build:watch  # build in watch mode
-npm test             # run vitest tests
-npm run test:watch   # run tests in watch mode
-npm run typecheck    # TypeScript type check (no emit)
+npm install          # 의존성 설치
+npm run build        # tsup 빌드 (dist/ 생성)
+npm run build:watch  # watch 모드 빌드
+npm test             # vitest 테스트
+npm run test:watch   # watch 모드 테스트
+npm run typecheck    # 타입 체크 (emit 없음)
 ```
 
-## License
+## 라이선스
 
 MIT
