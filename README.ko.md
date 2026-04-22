@@ -211,7 +211,7 @@ try {
 ### A. forRoot — 직접 값 주입
 
 ```ts
-import {PubgModule} from 'pubg-kit/dist/nestjs';
+import {PubgModule} from 'pubg-kit/nestjs';
 
 @Module({
   imports: [
@@ -226,7 +226,7 @@ export class AppModule {}
 ### B. forRootAsync — ConfigService 등 DI 사용
 
 ```ts
-import {PubgModule} from 'pubg-kit/dist/nestjs';
+import {PubgModule} from 'pubg-kit/nestjs';
 import {ConfigModule, ConfigService} from '@nestjs/config';
 
 @Module({
@@ -256,7 +256,7 @@ PUBG_TIMEOUT=10000
 ```
 
 ```ts
-import {PubgModule} from 'pubg-kit/dist/nestjs';
+import {PubgModule} from 'pubg-kit/nestjs';
 
 @Module({
   imports: [PubgModule.withConfig()],
@@ -318,7 +318,7 @@ export class PlayerService {
 
 ```bash
 npm install          # 의존성 설치
-npm run build        # tsup 빌드 (dist/ 생성)
+npm run build        # tsup 빌드 ( 생성)
 npm run build:watch  # watch 모드 빌드
 npm test             # vitest 테스트
 npm run test:watch   # watch 모드 테스트
