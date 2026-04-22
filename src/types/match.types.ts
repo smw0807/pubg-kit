@@ -32,6 +32,7 @@ export const MatchResponseSchema = z.object({
   links: z.object({ self: z.string() }).optional(),
 });
 
+export type MatchAttributes = z.infer<typeof MatchAttributesSchema>;
 export type Match = z.infer<typeof MatchSchema>;
 export type MatchResponse = z.infer<typeof MatchResponseSchema>;
 export type { GameMode };

@@ -65,3 +65,63 @@ export interface PlayerSeasonStats {
     'squad-fpp'?: GameModeStats;
   };
 }
+
+export interface PlayerSeasonResponse {
+  data: {
+    type: 'playerSeason';
+    id: string;
+    attributes: {
+      gameModeStats: PlayerSeasonStats['gameModeStats'];
+    };
+    relationships?: Record<string, unknown>;
+  };
+}
+
+export interface RankedTier {
+  tier: string;
+  subTier: string;
+}
+
+export interface RankedGameModeStats {
+  currentRankPoint: number;
+  bestRankPoint: number;
+  currentTier: RankedTier;
+  bestTier: RankedTier;
+  roundsPlayed: number;
+  avgRank: number;
+  avgSurvivalTime: number;
+  deaths: number;
+  kda: number;
+  kdr: number;
+  kills: number;
+  wins: number;
+  top10Ratio: number;
+  winRatio: number;
+}
+
+export interface PlayerRankedSeasonResponse {
+  data: {
+    type: 'playerRankedSeason';
+    id: string;
+    attributes: {
+      rankedGameModeStats: {
+        solo?: RankedGameModeStats;
+        'solo-fpp'?: RankedGameModeStats;
+        duo?: RankedGameModeStats;
+        'duo-fpp'?: RankedGameModeStats;
+        squad?: RankedGameModeStats;
+        'squad-fpp'?: RankedGameModeStats;
+      };
+    };
+  };
+}
+
+export interface BatchPlayerStatsResponse {
+  data: Array<{
+    type: 'playerSeason';
+    id: string;
+    attributes: {
+      gameModeStats: PlayerSeasonStats['gameModeStats'];
+    };
+  }>;
+}

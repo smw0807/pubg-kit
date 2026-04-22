@@ -36,5 +36,6 @@ export const SurvivalMasteryResponseSchema = z.object({
   }),
 });
 
+export type WeaponSummary = z.infer<typeof WeaponSummarySchema>;
 export type WeaponMasteryResponse = z.infer<typeof WeaponMasteryResponseSchema>;
 export type SurvivalMasteryResponse = z.infer<typeof SurvivalMasteryResponseSchema>;

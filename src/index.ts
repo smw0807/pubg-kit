@@ -22,12 +22,24 @@ export type {
   JsonApiResource,
 } from './types/common.types';
 export type { Player, PlayersResponse } from './types/player.types';
-export type { Match, MatchResponse } from './types/match.types';
-export type { Season, SeasonsResponse, GameModeStats, PlayerSeasonStats } from './types/season.types';
+export type { MatchAttributes, Match, MatchResponse } from './types/match.types';
+export type {
+  Season,
+  SeasonsResponse,
+  GameModeStats,
+  PlayerSeasonStats,
+  PlayerSeasonResponse,
+  RankedTier,
+  RankedGameModeStats,
+  PlayerRankedSeasonResponse,
+  BatchPlayerStatsResponse,
+} from './types/season.types';
 export type { LeaderboardPlayer, LeaderboardResponse } from './types/leaderboard.types';
 export type { TelemetryEvent, TelemetryEventBase, LogPlayerKillV2, TelemetryCharacter } from './types/telemetry.types';
 export type { Clan, ClanResponse } from './types/clan.types';
-export type { WeaponMasteryResponse, SurvivalMasteryResponse } from './types/mastery.types';
+export type { WeaponSummary, WeaponMasteryResponse, SurvivalMasteryResponse } from './types/mastery.types';
+export type { SampleResponse } from './types/sample.types';
+export type { StatusResponse } from './types/status.types';
 
 // Errors
 export {

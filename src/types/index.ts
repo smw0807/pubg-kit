@@ -6,3 +6,5 @@ export * from './leaderboard.types';
 export * from './telemetry.types';
 export * from './clan.types';
 export * from './mastery.types';
+export * from './sample.types';
+export * from './status.types';
