@@ -1,4 +1,4 @@
-import { type DynamicModule, Module } from '@nestjs/common';
+import { type DynamicModule, Global, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PubgService } from './pubg.service';
 import { PUBG_CLIENT_OPTIONS } from './pubg.constants';
@@ -12,10 +12,12 @@ export interface PubgModuleAsyncOptions {
   inject?: any[];
 }
 
+@Global()
 @Module({})
 export class PubgModule {
   static forRoot(options: PubgClientOptions): DynamicModule {
     return {
+      global: true,
       module: PubgModule,
       providers: [
         {
@@ -30,6 +32,7 @@ export class PubgModule {
 
   static forRootAsync(asyncOptions: PubgModuleAsyncOptions): DynamicModule {
     return {
+      global: true,
       module: PubgModule,
       imports: asyncOptions.imports ?? [],
       providers: [
