@@ -4,6 +4,7 @@ import { type PlatformShard } from '../types/common.types';
 import { PlayersResource } from '../resources/players.resource';
 import { MatchesResource } from '../resources/matches.resource';
 import { SeasonsResource } from '../resources/seasons.resource';
+import { StatsResource } from '../resources/stats.resource';
 import { LeaderboardsResource } from '../resources/leaderboards.resource';
 import { SamplesResource } from '../resources/samples.resource';
 import { TelemetryResource } from '../resources/telemetry.resource';
@@ -15,6 +16,7 @@ export class ShardClient {
   readonly players: PlayersResource;
   readonly matches: MatchesResource;
   readonly seasons: SeasonsResource;
+  readonly stats: StatsResource;
   readonly leaderboards: LeaderboardsResource;
   readonly samples: SamplesResource;
   readonly telemetry: TelemetryResource;
@@ -30,6 +32,7 @@ export class ShardClient {
     this.players = new PlayersResource(http, platform, cache);
     this.matches = new MatchesResource(http, platform, cache);
     this.seasons = new SeasonsResource(http, platform, cache);
+    this.stats = new StatsResource(http, platform, cache);
     this.leaderboards = new LeaderboardsResource(http, platform, cache);
     this.samples = new SamplesResource(http, platform, cache);
     this.telemetry = new TelemetryResource(http, platform, cache);

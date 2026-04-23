@@ -7,6 +7,7 @@ export type { PubgClientOptions } from './client/client.options';
 export { PlayersResource } from './resources/players.resource';
 export { MatchesResource } from './resources/matches.resource';
 export { SeasonsResource } from './resources/seasons.resource';
+export { StatsResource } from './resources/stats.resource';
 export { LeaderboardsResource } from './resources/leaderboards.resource';
 export { SamplesResource } from './resources/samples.resource';
 export { TelemetryResource } from './resources/telemetry.resource';
@@ -41,9 +42,8 @@ export type {
   AssetReference,
   ParticipantReference,
 } from './types/match.types';
+export type { Season, SeasonsResponse } from './types/season.types';
 export type {
-  Season,
-  SeasonsResponse,
   GameModeStats,
   PlayerSeasonStats,
   PlayerSeasonResponse,
@@ -51,7 +51,7 @@ export type {
   RankedGameModeStats,
   PlayerRankedSeasonResponse,
   BatchPlayerStatsResponse,
-} from './types/season.types';
+} from './types/stats.types';
 export type { LeaderboardPlayer, LeaderboardResponse } from './types/leaderboard.types';
 export type {
   TelemetryLocation,

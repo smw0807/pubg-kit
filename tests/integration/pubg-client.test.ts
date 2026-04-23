@@ -30,6 +30,7 @@ describe('PubgClient integration', () => {
       expect(shard.players).toBeDefined();
       expect(shard.matches).toBeDefined();
       expect(shard.seasons).toBeDefined();
+      expect(shard.stats).toBeDefined();
       expect(shard.leaderboards).toBeDefined();
       expect(shard.samples).toBeDefined();
       expect(shard.telemetry).toBeDefined();

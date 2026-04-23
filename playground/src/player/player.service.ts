@@ -19,15 +19,15 @@ export class PlayerService {
   }
 
   getSeasonStats(playerId: string, seasonId: string, platform: PlatformShard) {
-    return this.pubg.shard(platform).seasons.getPlayerStats(playerId, seasonId);
+    return this.pubg.shard(platform).stats.getPlayerStats(playerId, seasonId);
   }
 
   getPlayerRankedStats(playerId: string, seasonId: string, platform: PlatformShard) {
-    return this.pubg.shard(platform).seasons.getPlayerRankedStats(playerId, seasonId);
+    return this.pubg.shard(platform).stats.getPlayerRankedStats(playerId, seasonId);
   }
 
   getLifetimeStats(playerId: string, platform: PlatformShard) {
-    return this.pubg.shard(platform).seasons.getLifetimeStats(playerId);
+    return this.pubg.shard(platform).stats.getLifetimeStats(playerId);
   }
 
   getMatch(matchId: string, platform: PlatformShard) {
