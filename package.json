@@ -1,6 +1,6 @@
 {
   "name": "pubg-kit",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "PUBG REST API TypeScript SDK + NestJS Module",
   "author": "",
   "license": "MIT",

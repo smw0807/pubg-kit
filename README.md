@@ -106,27 +106,28 @@ const match = await shard.matches.get('match-id');
 ```ts
 // All seasons for the platform
 const seasons = await shard.seasons.getAll();
+```
 
+### Stats
+
+```ts
 // Normal season stats for a single player
-const stats = await shard.seasons.getPlayerStats('account.xxx', 'season-id');
+const stats = await shard.stats.getPlayerStats('account.xxx', 'season-id');
 
 // Ranked season stats for a single player (Season 7+)
-const ranked = await shard.seasons.getPlayerRankedStats(
-  'account.xxx',
-  'season-id',
-);
+const ranked = await shard.stats.getPlayerRankedStats('account.xxx', 'season-id');
 
 // Lifetime (career) stats for a single player
-const lifetime = await shard.seasons.getLifetimeStats('account.xxx');
+const lifetime = await shard.stats.getLifetimeStats('account.xxx');
 
 // Batch normal season stats — up to 10 players, single game mode
-const batch = await shard.seasons.getBatchPlayerStats('season-id', 'squad', [
+const batch = await shard.stats.getBatchPlayerStats('season-id', 'squad', [
   'account.xxx',
   'account.yyy',
 ]);
 
 // Batch lifetime stats — up to 10 players, single game mode
-const batchLifetime = await shard.seasons.getBatchLifetimeStats('squad', [
+const batchLifetime = await shard.stats.getBatchLifetimeStats('squad', [
   'account.xxx',
   'account.yyy',
 ]);
@@ -304,13 +305,18 @@ export class PlayerService {
 
 ## Cache TTL Strategy
 
-| Endpoint             | TTL                                 |
-| -------------------- | ----------------------------------- |
-| `matches.get()`      | Permanent (match data is immutable) |
-| `seasons.getAll()`   | 1 hour                              |
-| `leaderboards.get()` | 10 minutes                          |
-| `players.getById()`  | 5 minutes                           |
-| `status.get()`       | 30 seconds                          |
+| Endpoint                        | TTL                                 |
+| ------------------------------- | ----------------------------------- |
+| `matches.get()`                 | Permanent (match data is immutable) |
+| `seasons.getAll()`              | 1 hour                              |
+| `leaderboards.get()`            | 10 minutes                          |
+| `players.getById()`             | 5 minutes                           |
+| `stats.getPlayerStats()`        | 5 minutes                           |
+| `stats.getPlayerRankedStats()`  | 5 minutes                           |
+| `stats.getLifetimeStats()`      | 5 minutes                           |
+| `stats.getBatchPlayerStats()`   | 5 minutes                           |
+| `stats.getBatchLifetimeStats()` | 5 minutes                           |
+| `status.get()`                  | 30 seconds                          |
 
 ## Development
 

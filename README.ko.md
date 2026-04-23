@@ -106,27 +106,28 @@ const match = await shard.matches.get('match-id');
 ```ts
 // 전체 시즌 목록
 const seasons = await shard.seasons.getAll();
+```
 
+### Stats
+
+```ts
 // 플레이어 일반 시즌 통계
-const stats = await shard.seasons.getPlayerStats('account.xxx', 'season-id');
+const stats = await shard.stats.getPlayerStats('account.xxx', 'season-id');
 
 // 플레이어 랭크 시즌 통계 (Season 7 이후)
-const ranked = await shard.seasons.getPlayerRankedStats(
-  'account.xxx',
-  'season-id',
-);
+const ranked = await shard.stats.getPlayerRankedStats('account.xxx', 'season-id');
 
 // 라이프타임(누적) 통계
-const lifetime = await shard.seasons.getLifetimeStats('account.xxx');
+const lifetime = await shard.stats.getLifetimeStats('account.xxx');
 
 // 배치 일반 시즌 통계 — 최대 10명, 게임 모드 단위
-const batch = await shard.seasons.getBatchPlayerStats('season-id', 'squad', [
+const batch = await shard.stats.getBatchPlayerStats('season-id', 'squad', [
   'account.xxx',
   'account.yyy',
 ]);
 
 // 배치 라이프타임 통계 — 최대 10명, 게임 모드 단위
-const batchLifetime = await shard.seasons.getBatchLifetimeStats('squad', [
+const batchLifetime = await shard.stats.getBatchLifetimeStats('squad', [
   'account.xxx',
   'account.yyy',
 ]);
@@ -306,13 +307,18 @@ export class PlayerService {
 
 ## 캐시 TTL 전략
 
-| 엔드포인트           | TTL                       |
-| -------------------- | ------------------------- |
-| `matches.get()`      | 영구 (매치 데이터는 불변) |
-| `seasons.getAll()`   | 1시간                     |
-| `leaderboards.get()` | 10분                      |
-| `players.getById()`  | 5분                       |
-| `status.get()`       | 30초                      |
+| 엔드포인트                      | TTL                       |
+| ------------------------------- | ------------------------- |
+| `matches.get()`                 | 영구 (매치 데이터는 불변) |
+| `seasons.getAll()`              | 1시간                     |
+| `leaderboards.get()`            | 10분                      |
+| `players.getById()`             | 5분                       |
+| `stats.getPlayerStats()`        | 5분                       |
+| `stats.getPlayerRankedStats()`  | 5분                       |
+| `stats.getLifetimeStats()`      | 5분                       |
+| `stats.getBatchPlayerStats()`   | 5분                       |
+| `stats.getBatchLifetimeStats()` | 5분                       |
+| `status.get()`                  | 30초                      |
 
 ## 개발
 
