@@ -53,7 +53,18 @@ export type {
   BatchPlayerStatsResponse,
 } from './types/season.types';
 export type { LeaderboardPlayer, LeaderboardResponse } from './types/leaderboard.types';
-export type { TelemetryEvent, TelemetryEventBase, LogPlayerKillV2, TelemetryCharacter } from './types/telemetry.types';
+export type {
+  TelemetryLocation,
+  TelemetryCharacter,
+  TelemetryVehicle,
+  TelemetryDamageInfo,
+  TelemetryEventBase,
+  LogPlayerPosition,
+  LogPlayerKillV2,
+  LogPlayerMakeGroggy,
+  LogPlayerTakeDamage,
+  TelemetryEvent,
+} from './types/telemetry.types';
 export type { Clan, ClanResponse } from './types/clan.types';
 export type { WeaponSummary, WeaponMasteryResponse, SurvivalMasteryResponse } from './types/mastery.types';
 export type { SampleResponse } from './types/sample.types';
