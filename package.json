@@ -1,6 +1,6 @@
 {
   "name": "pubg-kit",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "PUBG REST API TypeScript SDK + NestJS Module",
   "author": "",
   "license": "MIT",
@@ -72,6 +72,14 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/smw0807/pubg-kit.git"
+  },
+  "homepage": "https://github.com/smw0807/pubg-kit#readme",
+  "bugs": {
+    "url": "https://github.com/smw0807/pubg-kit/issues"
   },
   "keywords": [
     "pubg",
