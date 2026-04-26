@@ -26,7 +26,7 @@ export const WeaponMasteryResponseSchema = z.object({
 
 export const SurvivalMasteryResponseSchema = z.object({
   data: z.object({
-    type: z.literal('survivalMastery'),
+    type: z.literal('survivalMasterySummary'),
     id: z.string(),
     attributes: z.object({
       xp: z.number(),
