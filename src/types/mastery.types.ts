@@ -9,14 +9,14 @@ export const WeaponSummarySchema = z.object({
     DamagePlayer: z.number(),
     HeadShots: z.number(),
     Groggies: z.number(),
-    LongestKill: z.number(),
+    LongestKill: z.number().optional(),
     MostKillsInAGame: z.number(),
   }),
 });
 
 export const WeaponMasteryResponseSchema = z.object({
   data: z.object({
-    type: z.literal('weaponMastery'),
+    type: z.literal('weaponMasterySummary'),
     id: z.string(),
     attributes: z.object({
       weaponSummaries: z.record(WeaponSummarySchema),
